@@ -1,11 +1,14 @@
 cuckoo_hash
 -----------
 
-C implementation of cuckoo hashing [0]
+C implementation of cuckoo hashing.
 
 
 
 
 LINKS
 -----
-[0] https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.25.4189&rep=rep1&type=pdf
+- https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.25.4189&rep=rep1&type=pdf
+- http://www.lkozma.net/cuckoo_hashing_visualization
+- https://en.wikipedia.org/wiki/Cuckoo_hashing
+- https://programming.guide/cuckoo-hashing.html
