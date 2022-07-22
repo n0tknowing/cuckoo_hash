@@ -2,7 +2,7 @@
 #include <inttypes.h>
 #include <stdio.h>
 
-#include "cuckoo_hash.h"
+#include <cuckoo_hash.h>
 
 int main(void)
 {
