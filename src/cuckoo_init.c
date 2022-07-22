@@ -18,6 +18,8 @@ struct cuckoo *cuckoo_init(size_t cap, hash_fn h1, hash_fn h2, cmp_fn cmp)
 		cap = CUCKOO_MIN_CAP;
 	else if (cap > CUCKOO_MAX_CAP)
 		cap = CUCKOO_MAX_CAP;
+	else if (cap % 2 != 0)
+		cap = cap + 1;
 
 	struct cuckoo *ch = malloc(sizeof(struct cuckoo));
 	if (ch == NULL)
