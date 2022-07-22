@@ -10,7 +10,7 @@ const void *cuckoo_insert(struct cuckoo *ch, const void *key, size_t len,
 
 	struct cuckoo_item *tmp = cuckoo_lookup(ch, key, len);
 	if (tmp)
-		return (void *)tmp->value;
+		return tmp->value;
 
 	uint64_t hash1 = ch->do_hash1(key, len);
 	uint64_t hash2 = ch->do_hash2(key, len);
