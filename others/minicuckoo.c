@@ -46,6 +46,8 @@ hashtable *init(size_t cap)
 		cap = 16;
 	else if (cap > 8192)
 		cap = 8192;
+	else if (cap % 2 != 0)
+		cap = cap + 1;
 
 	hashtable *h = malloc(sizeof(hashtable));
 	if (h == NULL)
