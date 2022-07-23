@@ -44,8 +44,8 @@ int init(hashtable *h, size_t cap)
 {
 	memset(h, 0, sizeof(hashtable));
 
-	int32_t _cap = cap * 2;
-	_cap = _cap < 64 ? 64 : _cap > 16384 ? 16384 : _cap;
+	int64_t _cap = cap * 2;
+	_cap = _cap < 64 ? 64 : _cap > 131072 ? 131072 : _cap;
 	cap = (size_t)_cap;
 
 	hashnode *node = calloc(cap, sizeof(hashnode));
