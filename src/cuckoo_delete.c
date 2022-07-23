@@ -4,7 +4,7 @@
 
 const void *cuckoo_delete(struct cuckoo *ch, const void *key, size_t len)
 {
-	int64_t idx = cuckoo_lookup_idx(ch, key, len);
+	ssize_t idx = cuckoo_lookup_idx(ch, key, len);
 	if (idx == -1)
 		return NULL;
 
