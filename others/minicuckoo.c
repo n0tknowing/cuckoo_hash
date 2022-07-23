@@ -145,22 +145,23 @@ void delete(hashtable *h, char *key)
 	if (idx == -1)
 		return;
 
-	if (h->node[idx].occupied)
-		h->node[idx].occupied = false;
-
+	h->node[idx].occupied = false;
 	h->count--;
+}
+
+void clear(hashtable *h)
+{
+	for (size_t i = 0; i < h->cap; i++)
+		h->node[i].occupied = false;
+
+	h->count = 0;
 }
 
 void destroy(hashtable *h)
 {
-	for (size_t i = 0; i < h->cap; i++) {
-		if (h->node[i].occupied)
-			h->node[i].occupied = false;
-	}
-
-	free(h->node);
-	h->count = 0;
 	h->cap = 0;
+	free(h->node);
+	h->node = NULL;
 	free(h);
 }
 
@@ -191,6 +192,8 @@ int main(void)
 	for (int i = 0; i < 5; i++)
 		delete(h, key[i]);
 
+	printf("%zu\n", h->count);
+	clear(h);
 	printf("%zu\n", h->count);
 
 	destroy(h);
