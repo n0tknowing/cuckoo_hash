@@ -14,7 +14,7 @@ const void *cuckoo_insert(struct cuckoo *ch, const void *key, size_t len,
 
 	uint64_t hash1 = ch->do_hash1(key, len);
 	uint64_t hash2 = ch->do_hash2(key, len);
-	size_t max_iter = ch->cap >> 1;  /* ??? */
+	ssize_t max_iter = ch->cap >> 1;  /* ??? */
 
 	struct cuckoo_item *item = malloc(sizeof(struct cuckoo_item));
 	if (item == NULL)
@@ -27,7 +27,7 @@ const void *cuckoo_insert(struct cuckoo *ch, const void *key, size_t len,
 	item->hash2 = hash2;
 
 	while (max_iter > 0) {
-		size_t idx = item->hash1 % ch->cap;
+		ssize_t idx = item->hash1 % ch->cap;
 		if (ch->tbl1[idx] == NULL) {
 			ch->tbl1[idx] = item;
 			ch->nitems++;
