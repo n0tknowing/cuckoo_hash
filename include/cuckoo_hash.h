@@ -27,14 +27,14 @@ struct cuckoo_item {
 struct cuckoo {
 	struct cuckoo_item	**tbl1;
 	struct cuckoo_item	**tbl2;
-	size_t			cap;
-	size_t			nitems;
+	ssize_t			cap;
+	ssize_t			nitems;
 	hash_fn			do_hash1;
 	hash_fn			do_hash2;
 	cmp_fn			do_cmp;
 };
 
-struct cuckoo *cuckoo_init(size_t, hash_fn, hash_fn, cmp_fn);
+struct cuckoo *cuckoo_init(ssize_t, hash_fn, hash_fn, cmp_fn);
 ssize_t cuckoo_lookup_idx(struct cuckoo *, const void *, size_t);
 struct cuckoo_item *cuckoo_lookup(struct cuckoo *, const void *, size_t);
 const void *cuckoo_insert(struct cuckoo *, const void *, size_t, const void *);

@@ -1,7 +1,6 @@
 #include <err.h>
 #include <inttypes.h>
 #include <stdio.h>
-
 #include <cuckoo_hash.h>
 
 int main(void)
@@ -13,7 +12,7 @@ int main(void)
 	printf("n items: %zu\n", ch->nitems);
 	printf("max capacity: %zu\n", ch->cap);
 
-	char *key[9] = { "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh" };
+	char *key[8] = { "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh" };
 	int val[8] = {1,2,3,4,5,6,7,8};
 
 	for (int i = 0; i < 8; i++) {

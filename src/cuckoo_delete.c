@@ -17,7 +17,7 @@ const void *cuckoo_delete(struct cuckoo *ch, const void *key, size_t len)
 		ch->tbl1[idx]->hash2 = 0;
 		free(ch->tbl1[idx]);
 		ch->tbl1[idx] = NULL;
-	} else if (ch->tbl2[idx]) {
+	} else {
 		value = ch->tbl2[idx]->value;
 		ch->tbl2[idx]->key = NULL;
 		ch->tbl2[idx]->value = NULL;

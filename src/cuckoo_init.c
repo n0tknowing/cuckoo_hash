@@ -12,7 +12,7 @@ static bool cuckoo_cmp(const void *s, const void *p, size_t n)
 	return strncmp(data1, data2, n) == 0;
 }
 
-struct cuckoo *cuckoo_init(size_t cap, hash_fn h1, hash_fn h2, cmp_fn cmp)
+struct cuckoo *cuckoo_init(ssize_t cap, hash_fn h1, hash_fn h2, cmp_fn cmp)
 {
 	if (cap < CUCKOO_MIN_CAP)
 		cap = CUCKOO_MIN_CAP;
@@ -38,7 +38,7 @@ struct cuckoo *cuckoo_init(size_t cap, hash_fn h1, hash_fn h2, cmp_fn cmp)
 		return NULL;
 	}
 
-	for (size_t i = 0; i < cap; i++) {
+	for (ssize_t i = 0; i < cap; i++) {
 		tbl1[i] = NULL;
 		tbl2[i] = NULL;
 	}

@@ -7,7 +7,7 @@ void cuckoo_clear(struct cuckoo *ch)
 	if (ch == NULL || ch->nitems == 0)
 		return;
 
-	for (size_t i = 0; i < ch->cap; i++) {
+	for (ssize_t i = 0; i < ch->cap; i++) {
 		if (ch->tbl1[i]) {
 			ch->tbl1[i]->key   = NULL;
 			ch->tbl1[i]->value = NULL;

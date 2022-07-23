@@ -12,8 +12,8 @@ typedef struct {
 
 typedef struct {
 	hashnode *node;
-	size_t count;
-	size_t cap;
+	ssize_t count;
+	ssize_t cap;
 } hashtable;
 
 static inline ssize_t hashfunc1(char *key)
@@ -40,13 +40,12 @@ static inline ssize_t hashfunc2(char *key)
 	return res;
 }
 
-int init(hashtable *h, size_t cap)
+int init(hashtable *h, ssize_t cap)
 {
 	memset(h, 0, sizeof(hashtable));
 
-	int64_t _cap = cap * 2;
-	_cap = _cap < 64 ? 64 : _cap > 131072 ? 131072 : _cap;
-	cap = (size_t)_cap;
+	cap = cap * 2;
+	cap = cap < 64 ? 64 : cap > 131072 ? 131072 : cap;
 
 	hashnode *node = calloc(cap, sizeof(hashnode));
 	if (node == NULL)
@@ -62,18 +61,18 @@ int init(hashtable *h, size_t cap)
 ssize_t lookup(hashtable *h, char *key)
 {
 	hashnode *node = h->node;
-	ssize_t index, hash, cap = h->cap >> 1;
+	ssize_t idx, hash, cap = h->cap >> 1;
 
 	hash = hashfunc1(key);
-	index = hash % cap;
-	if (node[index].occupied && !strcmp(key, node[index].key))
-		return index;
+	idx = hash % cap;
+	if (node[idx].occupied && !strcmp(key, node[idx].key))
+		return idx;
 
 	hash = hashfunc2(key);
-	index = hash % cap;
-	index = index + cap - 1;
-	if (node[index].occupied && !strcmp(key, node[index].key))
-		return index;
+	idx = hash % cap;
+	idx = idx + cap - 1;
+	if (node[idx].occupied && !strcmp(key, node[idx].key))
+		return idx;
 
 	return -1;
 }
@@ -82,30 +81,30 @@ ssize_t insert(hashtable *h, char *key, void *value)
 {
 	char *tk, *tv;
 	ssize_t (*hashfunc)(char *) = hashfunc1;
-	ssize_t index, hash, cap = h->cap >> 1, maxloop = cap >> 1;
+	ssize_t idx, hash, cap = h->cap >> 1, maxloop = cap >> 1;
 
-	index = lookup(h, key);
-	if (index != -1)
-		return index;
+	idx = lookup(h, key);
+	if (idx != -1)
+		return idx;
 
 	while (maxloop > 0) {
 		hash = hashfunc(key);
-		index = hash % cap;
+		idx = hash % cap;
 		if (hashfunc == hashfunc2)
-			index += cap - 1;
+			idx += cap - 1;
 
-		if (h->node[index].occupied == false) {
-			h->node[index].key = key;
-			h->node[index].value = value;
-			h->node[index].occupied = true;
+		if (h->node[idx].occupied == false) {
+			h->node[idx].key = key;
+			h->node[idx].value = value;
+			h->node[idx].occupied = true;
 			h->count++;
-			return index;
+			return idx;
 		}
 
-		tk = h->node[index].key;
-		tv = h->node[index].value;
-		h->node[index].key = key;
-		h->node[index].value = value;
+		tk = h->node[idx].key;
+		tv = h->node[idx].value;
+		h->node[idx].key = key;
+		h->node[idx].value = value;
 		key = tk;
 		value = tv;
 
@@ -133,7 +132,7 @@ void delete(hashtable *h, char *key)
 
 void clear(hashtable *h)
 {
-	for (size_t i = 0; i < h->cap; i++)
+	for (ssize_t i = 0; i < h->cap; i++)
 		h->node[i].occupied = false;
 
 	h->count = 0;
@@ -156,7 +155,7 @@ int main(void)
 	printf("cap: %zu, table cap: %zu\n", h->cap, h->cap >> 1);
 
 	ssize_t idx[10];
-	char *key[11] = {"aa","bb","cc","dd","ee","ff","gg","hh","ii","jj"};
+	char *key[10] = {"aa","bb","cc","dd","ee","ff","gg","hh","ii","jj"};
 	int val[10] = {1,2,3,4,5,6,7,8,9,0};
 
 	for (int i = 0; i < 10; i++) {
