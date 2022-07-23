@@ -33,6 +33,14 @@ int main(void)
 		printf("Hash2: %" PRIx64 "\n", last->hash2);
 	}
 
+	cuckoo_delete(ch, key[7], 3);
+	printf("n items: %zu\n", ch->nitems);
+	last = cuckoo_lookup(ch, key[7], 3);
+	if (last == NULL)
+		printf("OK doesn't exist\n");
+	else
+		printf("WTF??\n");
+
 	cuckoo_destroy(ch);
 	return 0;
 }
