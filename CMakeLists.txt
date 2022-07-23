@@ -8,6 +8,16 @@ set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_C_FLAGS "-Wall -Wextra -pedantic -Wstrict-prototypes -Wmissing-prototypes -Wstrict-aliasing")
 
 option(BUILD_EXAMPLES "Build examples" ON)
+option(BUILD_ASAN "Enable AddressSanitizer" OFF)
+option(BUILD_TSAN "Enable ThreadSanitizer" OFF)
+
+if(BUILD_ASAN)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Og -g -fsanitize=address,undefined")
+elseif(BUILD_TSAN)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Og -g -fsanitize=thread,undefined")
+else()
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -march=native")
+endif()
 
 add_subdirectory(src)
 
