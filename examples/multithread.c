@@ -73,8 +73,8 @@ int main(void)
 	if (ch == NULL)
 		err(1, "cuckoo_init");
 
-	printf("capacity: %ld\n", ch->cap);
-	printf("n: %ld\n", ch->nitems);
+	printf("capacity: %ld\n", ch->capacity);
+	printf("n: %ld\n", ch->count);
 
 	pthread_t thread[3];
 	pthread_attr_t attr;
@@ -96,7 +96,7 @@ int main(void)
 			printf("%d failed to join\n", i);
 	}
 
-	printf("n: %ld\n", ch->nitems);
+	printf("n: %ld\n", ch->count);
 
 	pthread_attr_destroy(&attr);
 	pthread_mutex_destroy(&mtx);

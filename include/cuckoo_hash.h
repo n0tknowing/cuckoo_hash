@@ -25,10 +25,9 @@ struct cuckoo_item {
 };
 
 struct cuckoo {
-	struct cuckoo_item	**tbl1;
-	struct cuckoo_item	**tbl2;
-	ssize_t			cap;
-	ssize_t			nitems;
+	struct cuckoo_item	**table;
+	ssize_t			capacity;
+	ssize_t			count;
 	hash_fn			do_hash1;
 	hash_fn			do_hash2;
 	cmp_fn			do_cmp;

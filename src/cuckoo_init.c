@@ -25,28 +25,28 @@ struct cuckoo *cuckoo_init(ssize_t cap, hash_fn h1, hash_fn h2, cmp_fn cmp)
 	if (ch == NULL)
 		return NULL;
 
-	struct cuckoo_item **tbl1 = calloc(cap, sizeof(struct cuckoo_item *));
-	if (tbl1 == NULL) {
+	struct cuckoo_item **table = malloc(sizeof(struct cuckoo_item) * 2);
+	if (table == NULL) {
 		free(ch);
 		return NULL;
 	}
 
-	struct cuckoo_item **tbl2 = calloc(cap, sizeof(struct cuckoo_item *));
-	if (tbl2 == NULL) {
-		free(tbl1);
+	if ((table[0] = calloc(cap, sizeof(struct cuckoo_item))) == NULL) {
+		free(table);
 		free(ch);
 		return NULL;
 	}
 
-	for (ssize_t i = 0; i < cap; i++) {
-		tbl1[i] = NULL;
-		tbl2[i] = NULL;
+	if ((table[1] = calloc(cap, sizeof(struct cuckoo_item))) == NULL) {
+		free(table[0]);
+		free(table);
+		free(ch);
+		return NULL;
 	}
 
-	ch->tbl1 = tbl1;
-	ch->tbl2 = tbl2;
-	ch->nitems = 0;
-	ch->cap = cap;
+	ch->table = table;
+	ch->count = 0;
+	ch->capacity = cap;
 	ch->do_hash1 = h1 ? h1 : fnvhash;
 	ch->do_hash2 = h2 ? h2 : murmurhash;
 	ch->do_cmp = cmp ? cmp : cuckoo_cmp;
