@@ -3,8 +3,6 @@
 #include <pthread.h>
 #include <cuckoo_hash.h>
 
-static pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
-
 static const char *key1[6] = {"aa","bb","cc","dd","ee","ff"};
 static const char *key2[6] = {"hh","ii","jj","kk","ll","mm"};
 static const char *key3[6] = {"hx","xi","rj","ek","jl","nm"};
@@ -15,8 +13,6 @@ static const int val3[6] = {2,4,8,6,0,1};
 
 static void *work1(void *arg)
 {
-	pthread_mutex_lock(&mtx);
-
 	struct cuckoo *ch = arg;
 	for (int i = 0; i < 6; i++) {
 		if (cuckoo_insert(ch, key1[i], 3, &val1[i]) == NULL)
@@ -25,16 +21,12 @@ static void *work1(void *arg)
 			printf("1: %s inserted\n", key1[i]);
 	}
 
-	pthread_mutex_unlock(&mtx);
 	pthread_exit(NULL);
-
 	return NULL;
 }
 
 static void *work2(void *arg)
 {
-	pthread_mutex_lock(&mtx);
-
 	struct cuckoo *ch = arg;
 	for (int i = 0; i < 6; i++) {
 		if (cuckoo_insert(ch, key2[i], 3, &val2[i]) == NULL)
@@ -43,16 +35,12 @@ static void *work2(void *arg)
 			printf("2: %s inserted\n", key2[i]);
 	}
 
-	pthread_mutex_unlock(&mtx);
 	pthread_exit(NULL);
-
 	return NULL;
 }
 
 static void *work3(void *arg)
 {
-	pthread_mutex_lock(&mtx);
-
 	struct cuckoo *ch = arg;
 	for (int i = 0; i < 6; i++) {
 		if (cuckoo_insert(ch, key3[i], 3, &val3[i]) == NULL)
@@ -61,9 +49,7 @@ static void *work3(void *arg)
 			printf("3: %s inserted\n", key3[i]);
 	}
 
-	pthread_mutex_unlock(&mtx);
 	pthread_exit(NULL);
-
 	return NULL;
 }
 
@@ -99,7 +85,6 @@ int main(void)
 	printf("n: %ld\n", ch->count);
 
 	pthread_attr_destroy(&attr);
-	pthread_mutex_destroy(&mtx);
 	cuckoo_destroy(ch);
 	return 0;
 }

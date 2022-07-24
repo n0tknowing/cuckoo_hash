@@ -10,7 +10,7 @@ set(CUCKOO_VERSION ${CUCKOO_MAJOR_VERSION}.${CUCKOO_MINOR_VERSION}.${CUCKOO_PATC
 include(GNUInstallDirs)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_C_FLAGS "-Wall -Wextra -pedantic -Wstrict-prototypes -Wmissing-prototypes -Wstrict-aliasing")
