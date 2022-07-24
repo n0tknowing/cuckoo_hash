@@ -19,6 +19,17 @@ else()
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -march=native")
 endif()
 
+if(NOT DEFINED CUCKOO_MIN_CAP)
+	set(CUCKOO_MIN_CAP 16)
+endif()
+
+if(NOT DEFINED CUCKOO_MAX_CAP)
+	set(CUCKOO_MAX_CAP 8192)
+endif()
+
+add_definitions(-DCUCKOO_MIN_CAP=${CUCKOO_MIN_CAP})
+add_definitions(-DCUCKOO_MAX_CAP=${CUCKOO_MAX_CAP})
+
 add_subdirectory(src)
 
 if(BUILD_EXAMPLES)
