@@ -1,9 +1,13 @@
 cuckoo_hash
 -----------
-
 C implementation of cuckoo hashing.
 
 
+NOTES
+-----
+- To know whether an entry is occupied or not, I use entry `key` and
+  compare it with NULL, if NULL then it's not occupied and insert
+  new entry there.
 
 
 LINKS
