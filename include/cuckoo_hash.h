@@ -1,6 +1,7 @@
 #ifndef CUCKOO_HASH_H
 #define CUCKOO_HASH_H
 
+#include <stdatomic.h>
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -26,11 +27,11 @@ struct cuckoo_item {
 
 struct cuckoo {
 	struct cuckoo_item	**table;
-	ssize_t			capacity;
-	ssize_t			count;
-	hash_fn			do_hash1;
-	hash_fn			do_hash2;
-	cmp_fn			do_cmp;
+	_Atomic ssize_t		cap;
+	_Atomic ssize_t		nitems;
+	_Atomic hash_fn		do_hash1;
+	_Atomic hash_fn		do_hash2;
+	_Atomic cmp_fn		do_cmp;
 };
 
 struct cuckoo *cuckoo_init(ssize_t, hash_fn, hash_fn, cmp_fn);
