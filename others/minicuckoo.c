@@ -42,9 +42,7 @@ static inline ssize_t hashfunc2(char *key)
 
 int init(hashtable *h, ssize_t cap)
 {
-	memset(h, 0, sizeof(hashtable));
-
-	cap = cap * 2;
+	cap = cap % 2 ? cap * 2 + 1 : cap * 2;
 	cap = cap < 64 ? 64 : cap > 131072 ? 131072 : cap;
 
 	hashnode *node = calloc(cap, sizeof(hashnode));
