@@ -9,8 +9,8 @@ int main(void)
 	if (ch == NULL)
 		err(1, "cuckoo_init");
 
-	printf("n items: %zu\n", ch->nitems);
-	printf("max capacity: %zu\n", ch->cap);
+	printf("n items: %zu\n", ch->count);
+	printf("max capacity: %zu\n", ch->capacity);
 
 	char *key[8] = { "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh" };
 	int val[8] = {1,2,3,4,5,6,7,8};
@@ -22,7 +22,7 @@ int main(void)
 		}
 	}
 
-	printf("n items: %zu\n", ch->nitems);
+	printf("n items: %zu\n", ch->count);
 
 	struct cuckoo_item *last = cuckoo_lookup(ch, key[7], 3);
 	if (last) {
@@ -33,7 +33,7 @@ int main(void)
 	}
 
 	cuckoo_delete(ch, key[7], 3);
-	printf("n items: %zu\n", ch->nitems);
+	printf("n items: %zu\n", ch->count);
 	last = cuckoo_lookup(ch, key[7], 3);
 	if (last == NULL)
 		printf("OK doesn't exist\n");

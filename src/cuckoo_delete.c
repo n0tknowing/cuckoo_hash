@@ -9,24 +9,13 @@ const void *cuckoo_delete(struct cuckoo *ch, const void *key, size_t len)
 		return NULL;
 
 	const void *value = NULL;
-	if (ch->tbl1[idx]) {
-		value = ch->tbl1[idx]->value;
-		ch->tbl1[idx]->key = NULL;
-		ch->tbl1[idx]->value = NULL;
-		ch->tbl1[idx]->hash1 = 0;
-		ch->tbl1[idx]->hash2 = 0;
-		free(ch->tbl1[idx]);
-		ch->tbl1[idx] = NULL;
-	} else {
-		value = ch->tbl2[idx]->value;
-		ch->tbl2[idx]->key = NULL;
-		ch->tbl2[idx]->value = NULL;
-		ch->tbl2[idx]->hash1 = 0;
-		ch->tbl2[idx]->hash2 = 0;
-		free(ch->tbl2[idx]);
-		ch->tbl2[idx] = NULL;
-	}
+	int idxtable = ch->table[0][idx].key ? 0 : 1;
 
-	ch->nitems--;
+	ch->table[idxtable][idx].key = NULL;
+	ch->table[idxtable][idx].value = NULL;
+	ch->table[idxtable][idx].hash1 = 0;
+	ch->table[idxtable][idx].hash2 = 0;
+
+	ch->count--;
 	return value;
 }
