@@ -3,6 +3,33 @@ cuckoo_hash
 C implementation of cuckoo hashing.
 
 
+REQUIREMENTS
+------------
+- cmake
+- a working C compiler that support C99
+
+
+BUILD AND INSTALL
+-----------------
+$ mkdir build && cd build
+$ cmake ..
+$ make
+# make install
+
+cmake options:
+- CUCKOO_BUILD_STATIC (ON or OFF to enable/disable static library, default OFF)
+- CUCKOO_BUILD_SHARED (ON or OFF to enable/disable shared library, default ON)
+- CUCKOO_MIN_CAP (set minimum hash table capacity, default 16)
+- CUCKOO_MAX_CAP (set maximum hash table capacity, default 8092)
+- CMAKE_C_COMPILER (specify C compiler, default cc)
+- CMAKE_INSTALL_PREFIX (specify installation directory, default /usr/local)
+
+other options:
+- CUCKOO_ENABLE_ASAN (ON or OFF to enable/disable AddressSanitizer, default OFF)
+- CUCKOO_ENABLE_TSAN (ON or OFF to enable/disable ThreadSanitizer, default OFF)
+- CUCKOO_BUILD_EXAMPLE (ON or OFF to build example files, default ON)
+
+
 NOTES
 -----
 - To know whether an entry is occupied or not, I use entry `key` and
