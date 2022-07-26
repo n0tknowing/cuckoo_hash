@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(cuckoo_hash VERSION 1.0.0 LANGUAGES C)
+project(cuckoo_hash LANGUAGES C)
 
 set(CUCKOO_MAJOR_VERSION 1)
 set(CUCKOO_MINOR_VERSION 0)
