@@ -9,7 +9,10 @@ const void *cuckoo_delete(struct cuckoo *ch, const void *key, size_t len)
 		return NULL;
 
 	int idxtable = ch->table[0][idx].key ? 0 : 1;
+
 	const void *value = ch->table[idxtable][idx].value;
+	if (value == NULL)
+		value = ch->table[idxtable][idx].key;
 
 	ch->table[idxtable][idx].key = NULL;
 	ch->table[idxtable][idx].value = NULL;

@@ -12,7 +12,7 @@ static inline void swap(struct cuckoo_item *x, struct cuckoo_item *y)
 const void *cuckoo_insert(struct cuckoo *ch, const void *key, size_t len,
 			  const void *value)
 {
-	if (ch == NULL || key == NULL || len == 0 || value == NULL)
+	if (ch == NULL || key == NULL || len == 0)
 		return NULL;
 
 	if (ch->capacity == 0) {
@@ -39,7 +39,7 @@ const void *cuckoo_insert(struct cuckoo *ch, const void *key, size_t len,
 			ch->table[0][idx].hash1 = tmp.hash1;
 			ch->table[0][idx].hash2 = tmp.hash2;
 			ch->count++;
-			return value;
+			return value ? value : key;
 		}
 
 		swap(&tmp, &ch->table[0][idx]);
@@ -51,7 +51,7 @@ const void *cuckoo_insert(struct cuckoo *ch, const void *key, size_t len,
 			ch->table[1][idx].hash1 = tmp.hash1;
 			ch->table[1][idx].hash2 = tmp.hash2;
 			ch->count++;
-			return value;
+			return value ? value : key;
 		}
 
 		swap(&tmp, &ch->table[1][idx]);
