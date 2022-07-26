@@ -32,13 +32,17 @@ int main(void)
 		printf("Hash2: %" PRIx64 "\n", last->hash2);
 	}
 
-	cuckoo_delete(ch, key[7], 3);
 	printf("n items: %zu\n", ch->count);
+
+	const int *v = cuckoo_delete(ch, key[7], 3);
 	last = cuckoo_lookup(ch, key[7], 3);
 	if (last == NULL)
 		printf("OK doesn't exist\n");
 	else
 		printf("WTF??\n");
+
+	if (*v == val[7])
+		printf("OK %d\n", *v);
 
 	cuckoo_destroy(ch);
 	return 0;
