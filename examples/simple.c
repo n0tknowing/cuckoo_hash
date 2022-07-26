@@ -12,8 +12,8 @@ int main(void)
 	printf("n items: %zu\n", ch->count);
 	printf("max capacity: %zu\n", ch->capacity);
 
-	char *key[8] = { "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh" };
-	int val[8] = {1,2,3,4,5,6,7,8};
+	const char *const key[8] = { "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh" };
+	const int val[8] = {1,2,3,4,5,6,7,8};
 
 	for (int i = 0; i < 8; i++) {
 		if (cuckoo_insert(ch, key[i], 3, &val[i]) == NULL) {
@@ -35,14 +35,16 @@ int main(void)
 	printf("n items: %zu\n", ch->count);
 
 	const int *v = cuckoo_delete(ch, key[7], 3);
+	if (v && *v == val[7])
+		printf("OK %d\n", *v);
+	else
+		printf("%s doesn't exist\n", key[7]);
+
 	last = cuckoo_lookup(ch, key[7], 3);
 	if (last == NULL)
 		printf("OK doesn't exist\n");
 	else
 		printf("WTF??\n");
-
-	if (*v == val[7])
-		printf("OK %d\n", *v);
 
 	cuckoo_destroy(ch);
 	return 0;
