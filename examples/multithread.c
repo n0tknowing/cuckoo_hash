@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <cuckoo_hash.h>
 
-pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 
 static const char *key1[6] = {"aa","bb","cc","dd","ee","ff"};
 static const char *key2[6] = {"hh","ii","jj","kk","ll","mm"};
