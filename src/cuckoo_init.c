@@ -14,12 +14,11 @@ static bool cuckoo_cmp(const void *s, const void *p, size_t n)
 
 struct cuckoo *cuckoo_init(ssize_t cap, hash_fn h1, hash_fn h2, cmp_fn cmp)
 {
-	if (cap < CUCKOO_MIN_CAP)
-		cap = CUCKOO_MIN_CAP;
-	else if (cap > CUCKOO_MAX_CAP)
-		cap = CUCKOO_MAX_CAP;
-	else if (cap % 2 != 0)
+	if (cap % 2 != 0)
 		cap = cap + 1;
+
+	if (cap < CUCKOO_MIN_CAP || cap > CUCKOO_MAX_CAP)
+		cap = CUCKOO_MIN_CAP;
 
 	struct cuckoo *ch = malloc(sizeof(struct cuckoo));
 	if (ch == NULL)
