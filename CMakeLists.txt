@@ -48,6 +48,12 @@ endif()
 
 if(CUCKOO_MIN_CAP LESS 0)
 	message(FATAL_ERROR "Negative minimum capacity")
+elseif(CUCKOO_MAX_CAP LESS 0)
+	message(FATAL_ERROR "Negative maximum capacity")
+endif()
+
+if(CUCKOO_MAX_CAP LESS_EQUAL CUCKOO_MIN_CAP)
+	message(FATAL_ERROR "Maximum capacity must greater than minimum capacity")
 endif()
 
 add_definitions(-DCUCKOO_MIN_CAP=${CUCKOO_MIN_CAP})

@@ -16,6 +16,12 @@
 
 #if CUCKOO_MIN_CAP < 0
 #error Negative minimum capacity
+#elif CUCKOO_MAX_CAP < 0
+#error Negative maximum capacity
+#endif
+
+#if CUCKOO_MIN_CAP >= CUCKOO_MAX_CAP
+#error Maximum capacity must greater than minimum capacity
 #endif
 
 typedef bool (*cmp_fn)(const void *, const void *, size_t);

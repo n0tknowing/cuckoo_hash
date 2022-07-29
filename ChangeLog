@@ -3,7 +3,8 @@ cuckoo_hash v1.1.1
 
 Changes:
 - Fix build error (Widianto Nur Firmansah)
-- Check for negative minimum capacity (Widianto Nur Firmansah)
+- Check for negative minimum and maximum capacity (Widianto Nur Firmansah)
+- Ensure maximum capacity is greater than maximum capacity (Widianto Nur Firmansah)
 
 ------------------------------------------------------------------------------
 
