@@ -16,8 +16,8 @@ typedef struct {
 
 typedef struct {
 	hashnode *node;
-	int count;
-	int cap;
+	unsigned int count;
+	unsigned int cap;
 } hashtable;
 
 static inline unsigned int hashfunc1(char *key)
@@ -46,7 +46,7 @@ static inline unsigned int hashfunc2(char *key)
 
 int init(hashtable *h, unsigned int cap)
 {
-	cap = cap < 64 ? 64 : cap > INT_MAX ? INT_MAX : (int)cap;
+	cap = cap < 64 ? 64 : cap > INT_MAX ? INT_MAX + 1U: cap;
 	if (!ISPOWOF2(cap))
 		return -1;
 
@@ -65,7 +65,7 @@ int lookup(hashtable *h, char *key)
 {
 	hashnode *node = h->node;
 	unsigned int hash;
-	int idx, cap = h->cap >> 1;
+	int idx, cap = (int)h->cap >> 1;
 
 	hash = hashfunc1(key);
 	idx = GETIDX(hash, cap);
@@ -85,7 +85,7 @@ int insert(hashtable *h, char *key, void *value)
 	char *tk, *tv;
 	unsigned int (*hashfunc)(char *) = hashfunc1;
 	unsigned int hash;
-	int idx, cap = h->cap >> 1, maxloop = cap >> 1;
+	int idx, cap = (int)h->cap >> 1, maxloop = cap >> 1;
 
 	idx = lookup(h, key);
 	if (idx != -1)
@@ -137,7 +137,7 @@ void delete(hashtable *h, char *key)
 
 void clear(hashtable *h)
 {
-	for (int i = 0; i < h->cap; i++)
+	for (unsigned int i = 0; i < h->cap; i++)
 		h->node[i].occupied = false;
 
 	h->count = 0;
@@ -157,7 +157,7 @@ int main(void)
 		return 1;
 
 	h = &ht;
-	printf("cap: %d, table cap: %d\n", h->cap, h->cap >> 1);
+	printf("cap: %u, table cap: %u\n", h->cap, h->cap >> 1);
 
 	int idx[10];
 	char *key[10] = {"aa","bb","cc","dd","ee","ff","gg","hh","ii","jj"};
@@ -180,9 +180,9 @@ int main(void)
 	for (int i = 0; i < 5; i++)
 		delete(h, key[i]);
 
-	printf("%d\n", h->count);
+	printf("%u\n", h->count);
 	clear(h);
-	printf("%d\n", h->count);
+	printf("%u\n", h->count);
 
 	destroy(h);
 	return 0;
