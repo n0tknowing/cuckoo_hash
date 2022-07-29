@@ -38,7 +38,6 @@ ssize_t cuckoo_lookup_idx(struct cuckoo *, const void *, size_t);
 struct cuckoo_item *cuckoo_lookup(struct cuckoo *, const void *, size_t);
 const void *cuckoo_insert(struct cuckoo *, const void *, size_t, const void *);
 const void *cuckoo_delete(struct cuckoo *, const void *, size_t);
-void cuckoo_setfn(struct cuckoo *, hash_fn, hash_fn, cmp_fn);
 void cuckoo_clear(struct cuckoo *);
 void cuckoo_destroy(struct cuckoo *);
 
