@@ -14,6 +14,10 @@
 #define CUCKOO_MAX_CAP	8192
 #endif
 
+#if CUCKOO_MIN_CAP < 0
+#error Negative minimum capacity
+#endif
+
 typedef bool (*cmp_fn)(const void *, const void *, size_t);
 typedef uint64_t (*hash_fn)(const void *, size_t);
 

@@ -28,8 +28,7 @@ set(CUCKOO_SRC
 	src/cuckoo_init.c
 	src/cuckoo_insert.c
 	src/cuckoo_lookup.c
-	src/cuckoo_lookup_idx.c
-	src/cuckoo_setfn.c)
+	src/cuckoo_lookup_idx.c)
 
 if(CUCKOO_ENABLE_ASAN)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Og -g -fsanitize=address,undefined")
@@ -45,6 +44,10 @@ endif()
 
 if(NOT DEFINED CUCKOO_MAX_CAP)
 	set(CUCKOO_MAX_CAP 8192)
+endif()
+
+if(CUCKOO_MIN_CAP LESS 0)
+	message(FATAL_ERROR "Negative minimum capacity")
 endif()
 
 add_definitions(-DCUCKOO_MIN_CAP=${CUCKOO_MIN_CAP})
