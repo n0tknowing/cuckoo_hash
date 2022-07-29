@@ -4,6 +4,10 @@
 #include <string.h>
 #include <sys/types.h>
 
+#define ISPOWOF2(a)	((a) > 0 && !((a) & ((a) - 1)))
+#define GETIDX(a, n)	((a) & ((n) - 1))
+#define GETIDX2(a, n)	(GETIDX(a, n) + (n) - 1)
+
 typedef struct {
 	char *key;
 	void *value;
@@ -42,8 +46,9 @@ static inline ssize_t hashfunc2(char *key)
 
 int init(hashtable *h, ssize_t cap)
 {
-	cap = cap % 2 ? cap * 2 + 1 : cap * 2;
 	cap = cap < 64 ? 64 : cap > 131072 ? 131072 : cap;
+	if (!ISPOWOF2(cap))
+		return -1;
 
 	hashnode *node = calloc(cap, sizeof(hashnode));
 	if (node == NULL)
@@ -62,13 +67,12 @@ ssize_t lookup(hashtable *h, char *key)
 	ssize_t idx, hash, cap = h->cap >> 1;
 
 	hash = hashfunc1(key);
-	idx = hash % cap;
+	idx = GETIDX(hash, cap);
 	if (node[idx].occupied && !strcmp(key, node[idx].key))
 		return idx;
 
 	hash = hashfunc2(key);
-	idx = hash % cap;
-	idx = idx + cap - 1;
+	idx = GETIDX2(hash, cap);
 	if (node[idx].occupied && !strcmp(key, node[idx].key))
 		return idx;
 
@@ -87,9 +91,10 @@ ssize_t insert(hashtable *h, char *key, void *value)
 
 	while (maxloop > 0) {
 		hash = hashfunc(key);
-		idx = hash % cap;
-		if (hashfunc == hashfunc2)
-			idx += cap - 1;
+		if (hashfunc == hashfunc1)
+			idx = GETIDX(hash, cap);
+		else
+			idx = GETIDX2(hash, cap);
 
 		if (h->node[idx].occupied == false) {
 			h->node[idx].key = key;
@@ -166,8 +171,8 @@ int main(void)
 
 	for (int i = 0; i < 10; i++) {
 		ssize_t _idx = lookup(h, key[i]);
-		if (_idx == idx[i])
-			printf("%s OK\n", key[i]);
+		if (_idx != -1 && _idx == idx[i])
+			printf("%s OK (%zd)\n", key[i], idx[i]);
 	}
 
 	for (int i = 0; i < 5; i++)
