@@ -1,11 +1,20 @@
 #include <err.h>
 #include <inttypes.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <cuckoo_hash.h>
 
+static bool intcmp(const void *x, const void *y, size_t n)
+{
+	(void)n;
+	int a = *((int *)x);
+	int b = *((int *)y);
+	return a == b;
+}
+
 int main(void)
 {
-	struct cuckoo *ch = cuckoo_init(16, NULL, NULL, NULL);
+	struct cuckoo *ch = cuckoo_init(16, NULL, NULL, intcmp);
 	if (ch == NULL)
 		err(1, "cuckoo_init");
 
