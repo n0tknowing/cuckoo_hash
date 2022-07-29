@@ -6,10 +6,7 @@
 
 static bool cuckoo_cmp(const void *s, const void *p, size_t n)
 {
-	const char *data1 = s;
-	const char *data2 = p;
-
-	return strncmp(data1, data2, n) == 0;
+	return memcmp(s, p, n) == 0;
 }
 
 struct cuckoo *cuckoo_init(ssize_t cap, hash_fn h1, hash_fn h2, cmp_fn cmp)
