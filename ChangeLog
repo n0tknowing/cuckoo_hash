@@ -1,3 +1,12 @@
+cuckoo_hash v1.1.1
+2022-07-29
+
+Changes:
+- Fix build error (Widianto Nur Firmansah)
+- Check for negative minimum capacity (Widianto Nur Firmansah)
+
+------------------------------------------------------------------------------
+
 cuckoo_hash v1.1.0
 2022-07-29
 
