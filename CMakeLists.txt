@@ -35,7 +35,7 @@ if(CUCKOO_ENABLE_ASAN)
 elseif(CUCKOO_ENABLE_TSAN)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Og -g -fsanitize=thread,undefined")
 else()
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -march=native")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
 endif()
 
 if(NOT DEFINED CUCKOO_MIN_CAP)
