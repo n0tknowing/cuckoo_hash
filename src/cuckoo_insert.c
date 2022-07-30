@@ -61,5 +61,13 @@ const void *cuckoo_insert(struct cuckoo *ch, const void *key, size_t len,
 	/* resize? */
 	/* rehash? */
 	/* insert again? */
+
+	/* another solution is to use bucketized cuckoo hashing.
+	 * each item is bucketized and it uses either dynamic array
+	 * or (worse) linked list.
+	 *
+	 * as a consequence, worst case for lookup and deletion is O(N)
+	 * where N is size of the bucket.
+	 */
 	return NULL;
 }
