@@ -150,22 +150,20 @@ void destroy(hashtable *h)
 	h->node = NULL;
 }
 
-#include "strlist.h"
-
 int main(void)
 {
 	hashtable ht, *h;
-	if (init(&ht, 1 << 22) == -1)
+	if (init(&ht, 8192) == -1)
 		return 1;
 
 	h = &ht;
 	printf("cap: %u, table cap: %u\n", h->cap, h->cap >> 1);
 
+	int idx[10];
+	char *key[10] = {"aa","bb","cc","dd","ee","ff","gg","hh","ii","jj"};
 	int val[10] = {1,2,3,4,5,6,7,8,9,0};
-	int l = sizeof(key) / sizeof(key[0]);
-	int *idx = calloc(l, sizeof(int));
 
-	for (int i = 0; i < l; i++) {
+	for (int i = 0; i < 10; i++) {
 		idx[i] = insert(h, key[i], &val[i]);
 		if (idx[i] == -1)
 			printf("%s failed\n", key[i]);
@@ -179,14 +177,13 @@ int main(void)
 			printf("%s OK (%d)\n", key[i], idx[i]);
 	}
 
-	for (int i = 0; i < 5000; i++)
+	for (int i = 0; i < 5; i++)
 		delete(h, key[i]);
 
 	printf("%u\n", h->count);
 	clear(h);
 	printf("%u\n", h->count);
 
-	free(idx);
 	destroy(h);
 	return 0;
 }
