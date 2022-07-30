@@ -35,6 +35,7 @@ NOTES
 - To know whether an entry is occupied or not, I use entry `key` and
   compare it with NULL, if NULL then it's not occupied and insert
   new entry there.
+- Fixed-size, it doesn't grow nor rehash.
 
 
 LINKS
