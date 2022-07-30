@@ -171,7 +171,7 @@ int main(void)
 
 	printf("%d\n", h->count);
 
-	for (int i = 0; i < 5000; i++) {
+	for (int i = 0; i < 10; i++) {
 		int _idx = lookup(h, key[i]);
 		if (_idx != -1 && _idx == idx[i])
 			printf("%s OK (%d)\n", key[i], idx[i]);
