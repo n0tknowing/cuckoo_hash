@@ -1,5 +1,3 @@
-#include <stdlib.h>
-
 #include "cuckoo_hash.h"
 
 const void *cuckoo_delete(struct cuckoo *ch, const void *key, size_t len)
