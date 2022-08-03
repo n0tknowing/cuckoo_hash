@@ -61,11 +61,18 @@ add_definitions(-DCUCKOO_MAX_CAP=${CUCKOO_MAX_CAP})
 
 if(CUCKOO_BUILD_STATIC)
 	add_library(cuckoo_hash STATIC ${CUCKOO_SRC})
+	message(STATUS "-- Building static library")
 elseif(CUCKOO_BUILD_SHARED)
 	add_library(cuckoo_hash SHARED ${CUCKOO_SRC})
+	message(STATUS "-- Building shared library")
 else()
 	message(FATAL_ERROR "CUCKOO_BUILD_SHARED and CUCKOO_BUILD_STATIC is disabled")
 endif()
+
+message(STATUS "-- C standard: C${CMAKE_C_STANDARD}")
+message(STATUS "-- CFLAGS: ${CMAKE_C_FLAGS}")
+message(STATUS "-- CUCKOO_MIN_CAP: ${CUCKOO_MIN_CAP}")
+message(STATUS "-- CUCKOO_MAX_CAP: ${CUCKOO_MAX_CAP}")
 
 target_include_directories(cuckoo_hash PUBLIC
 	"$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
