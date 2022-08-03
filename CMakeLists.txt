@@ -86,7 +86,15 @@ if(CUCKOO_BUILD_EXAMPLE)
 	add_subdirectory(examples)
 endif()
 
-install(DIRECTORY include/ DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
+set(includedir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR})
+set(libdir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+set(prefix ${CMAKE_INSTALL_PREFIX})
+configure_file(libcuckoo_hash.pc.in libcuckoo_hash.pc @ONLY)
+
+install(FILES ${PROJECT_BINARY_DIR}/libcuckoo_hash.pc
+	DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+install(DIRECTORY include/
+	DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
 install(TARGETS cuckoo_hash
 	EXPORT cuckoo_hash
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
