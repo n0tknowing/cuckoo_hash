@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=@libdir@
+includedir=@includedir@
+
+Name: cuckoo_hash
+Version: @CUCKOO_VERSION@
+Description: Implementation of Cuckoo hashing.
+URL: https://github.com/n0tknowing/cuckoo_hash
+
+Libs: -L${libdir} -lcuckoo_hash @LIBS@
+Cflags: -I${includedir}
