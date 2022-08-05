@@ -23,7 +23,7 @@ const void *cuckoo_insert(struct cuckoo *ch, const void *key, size_t len,
 		if (ch == NULL)
 			return NULL;
 	} else if (cuckoo_lookup(ch, key, len)) {
-		return value;
+		return value ? value : key;
 	}
 
 	uint64_t hash1 = ch->do_hash1(key, len);
