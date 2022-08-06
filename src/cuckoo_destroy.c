@@ -8,15 +8,14 @@ void cuckoo_destroy(struct cuckoo *ch)
 		return;
 
 	cuckoo_clear(ch);
-	free(ch->table[1]);
-	free(ch->table[0]);
-	free(ch->table);
+	free(ch->table[1]); ch->table[1] = NULL;
+	free(ch->table[0]); ch->table[0] = NULL;
+	free(ch->table); ch->table = NULL;
 
 	ch->capacity = 0;
 	ch->do_hash1 = NULL;
 	ch->do_hash2 = NULL;
 	ch->do_cmp = NULL;
-	ch->table = NULL;
 
 	free(ch);
 }
