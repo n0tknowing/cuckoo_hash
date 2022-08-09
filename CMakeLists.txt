@@ -8,9 +8,10 @@ set(CUCKOO_PATCH_VERSION 0)
 set(CUCKOO_VERSION ${CUCKOO_MAJOR_VERSION}.${CUCKOO_MINOR_VERSION}.${CUCKOO_PATCH_VERSION})
 
 include(GNUInstallDirs)
+include(CheckCSourceCompiles)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_C_FLAGS "-Wall -Wextra -pedantic -Wstrict-prototypes -Wmissing-prototypes -Wstrict-aliasing")
@@ -54,6 +55,17 @@ endif()
 
 if(CUCKOO_MAX_CAP LESS_EQUAL CUCKOO_MIN_CAP)
 	message(FATAL_ERROR "Maximum capacity must greater than minimum capacity")
+endif()
+
+check_c_source_compiles("#include <stdatomic.h>
+int main(void) {
+  _Atomic int a = 0;
+  atomic_int aa = 0;
+  return a + aa;
+}" CUCKOO_HAVE_STDATOMIC)
+
+if(NOT CUCKOO_HAVE_STDATOMIC)
+	message(FATAL_ERROR "stdatomic not working on this machine, exiting...")
 endif()
 
 add_definitions(-DCUCKOO_MIN_CAP=${CUCKOO_MIN_CAP})
